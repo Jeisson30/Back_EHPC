@@ -1,6 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
-import authRouter from '../src/routes/auth.routes.js'
+import authRouterRegister from './routes/auth/registerUser.routes.js'
+import authRouterLogin from './routes/auth/loginUser.routes.js'
 
 dotenv.config()
 const app = express()
@@ -12,5 +13,6 @@ console.log('//====== Inicia Servidor ======\\')
 
 //Rutas
 
-app.use('/api/auth', authRouter)
+app.use('/api/auth', authRouterRegister)
+app.use('/api/auth', authRouterLogin)
 
