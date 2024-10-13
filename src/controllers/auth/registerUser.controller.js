@@ -1,6 +1,5 @@
 import { pool } from "../../db.js"
 import bcrypt from 'bcrypt'
-//import jwt from 'jsonwebtoken'
 import config from "../../config/config.js"
 
 export const registerUsers = async (req, res) => {
