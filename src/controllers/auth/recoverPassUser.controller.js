@@ -1,6 +1,6 @@
 import { pool } from "../../db.js"
 import jwt from 'jsonwebtoken'
-import config from "../../config/config.js";
+import config from "../../config/config.js"
 import nodemailer from 'nodemailer'
 
 export const recoverPassword = async ( req, res ) => {
