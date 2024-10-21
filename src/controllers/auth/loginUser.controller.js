@@ -7,18 +7,22 @@ export const loginUsers = async ( req, res ) => {
 
   const { email, password } = req.body;
 
+  if (!email  || !password) {
+    return res.status(400).json({ status: false, message: 'Email y contraseña son obligatorios' })
+  }
+
   try {
 
     const [user] = await pool.query('SELECT * FROM users WHERE email = ?', [email])
 
     if (user.length == 0) {
-      return res.status(404).json({ message: 'Credenciales incorrectas' })
+      return res.status(404).json({ status : false, message: 'Credenciales incorrectas' })
     }
 
     const matchPassword = await bycript.compare(password, user[0].password)
 
     if (!matchPassword) {
-      return res.status(401).json({ message: 'Credenciales incorrectas' })
+      return res.status(401).json({ status: false, message: 'Credenciales incorrectas' })
     }
 
     const token = jwt.sign({
@@ -31,7 +35,11 @@ export const loginUsers = async ( req, res ) => {
       { expiresIn : config.jwtExpiresIn }
     )
 
-    res.status(200).json({ message: 'Login Exitoso', token })
+    res.status(200).json({
+      status: true, 
+      message: 'Login Exitoso',
+      data: { token : token }  
+    });
 
   } catch (error) {
       console.error('Error: ', error)
